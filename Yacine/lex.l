@@ -19,7 +19,6 @@ taille_tab  \[[1-9][{chiffre}]*\];
 PROCESS        return bib_process;
 LOOP           return bib_loop;
 ARRAY          return bib_array;
-$              return FI;
 Programme      return mc_programme;
 \$" "*\n       {nb_ligne++;
                return fin_instruction;}
