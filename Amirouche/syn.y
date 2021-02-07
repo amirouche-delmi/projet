@@ -15,6 +15,8 @@ mc_string
 mc_const
 quatre_points
 separateur_var
+crochet_ouvrant
+crochet_fermant
 taille_tab
 entier
 real
@@ -57,7 +59,7 @@ S: mc_import BIB dollar fin_ligne NOM_PROG
                             }
 ;
 BIB: bib_process|bib_loop|bib_array;
-NOM_PROG: mc_programme idf
+NOM_PROG: mc_programme
                             {
 
                             }

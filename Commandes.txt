@@ -1,4 +1,10 @@
+
 flex lex.l
 bison -d syn.y
 gcc lex.yy.c syn.tab.c -lfl -ly -o compilateur.exe
 compilateur <test.txt
+
+
+
+[0-9] => \d
+[0-9a-zA-Z_] => \w

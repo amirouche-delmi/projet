@@ -3,13 +3,13 @@
     int nb_ligne = 1;
 %}
 
-idf         [A-Z][0-9a-zA-Z]{0,9};
-taille_tab  \[[1-9]([0-9]*)\];
-int         ((0+)|([12]([0-9]{4}))|(3[01]([0-9]{3}))|(32[0-6]([0-9]{2}))|(327[0-5][0-9])|(3276[0-7])|([1-9]([0-9]{0,3})))|(\([+-]((0+)|([1-9]([0-9]{0,3}))|([12]([0-9]{4}))|(3[01]([0-9]{3}))|(32[0-6]([0-9]{2}))|(327[0-5][0-9])|(3276[0-7]))\))|(\(-32768\));
-real        (\+?[0-9]+\.[0-9]+)|(\(\-[0-9]+\.[0-9]+\)); 
+idf         [A-Z]\w{0,9};
+taille_tab  [1-9]\d*;
+int         0|[1-3][0-2][0-7][0-6][0-7]|[1-9]\d{0,3}|\([+\-]([1-3][0-2][0-7][0-6][0-7]|[1-9]\d{0,3})\)|\(-32768\);
+real        \d\.\d|[1-9]\d*\.\d*[1-9]|\d\.\d*[1-9]|[1-9]\d*\.\d|\([+\-](\d\.\d|[1-9]\d*\.\d*[1-9]|\d\.\d*[1-9]|[1-9]\d*\.\d)\); 
 char        .;
 str         .*;
-commentaire  \/\*(.|\n)*\*\/;
+commentaire "/*"[.\n]*"*/";
 
 %%
 
@@ -29,6 +29,8 @@ STRING         return mc_string;
 CONST          return mc_const;
 "::"           return quatre_points;
 "//"           return separateur_var;
+\[             return crochet_ouvrant;
+\]             return crochet_fermant;
 {taille_tab}   return taille_tab;
 {int}          return entier;
 {real}         return real;
@@ -63,3 +65,4 @@ ELSE           return mc_else;
 \/             return division;
 [ \t{commentaire}]
 \n             {nb_ligne++; return fin_ligne;}
+.              printf("erreur lexicale a la ligne %d \n", nb_ligne);
