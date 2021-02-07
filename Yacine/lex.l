@@ -9,8 +9,8 @@ cst         {chiffre}+;
 int         ((^[1-3][0-2][0-7][0-6][0-7]$|^[1-9][0-9][0-9][0-9]$|^[1-9][0-9][0-9]$|^[1-9][0-9]$|^[0-9]$))|\(-[1-3][0-2][0-7][0-6][0-8]\)|\(-[1-9][0-9][0-9][0-9]\)|\(-[1-9][0-9][0-9]\)|\(-[1-9][0-9]\)|\(-[1-9]\);
 real      \(-{chiffre}\d*\.{chiffre}*[1-9]\)|\(-{chiffre}\.{chiffre}*[1-9]\)|{chiffre}\.{chiffre}*[1-9]|[1-9]\d*\.{chiffre}*[1-9];
 char        .;
-str         [.\n]*;
-commentaire  "/*"{str}"*/";
+string        [.\n]*;
+commentaire  "/*"{string}"*/";
 taille_tab  \[[1-9][{chiffre}]*\];
 
 %%
@@ -20,8 +20,7 @@ PROCESS        return bib_process;
 LOOP           return bib_loop;
 ARRAY          return bib_array;
 Programme      return mc_programme;
-\$" "*\n       {nb_ligne++;
-               return fin_instruction;}
+\$             return dollar;
 
 
 VAR            return mc_var; 
@@ -36,7 +35,7 @@ CONST          return mc_const;
 {char}         return caractere;
 {string}       return string;
 {taille_tab}   return taille_tab;
-{idf}          return identificateur;
+{IDF}          return identificateur;
 
 
 WRITE        return mc_write;
@@ -53,25 +52,24 @@ END_IF       return mc_end_if;
 ELSE         return mc_else;
 
 ::          return quatre_points;
-//          return separateur_var;
+"//"          return separateur_var;
 \(          return parenthese_ouvrante;
 \)          return parenthese_fermante;
 \(\"        return parenthese_ouvrante_guillemet;
-\$          return signe_de_formatage_integer;
 \%          return signe_de_formatage_real;
 \#          return signe_de_formatage_string;
 \&          return signe_de_formatage_char;
 \"          return guillemet;
 \|          return barre_verticale;
 @           return arobase; 
-+           return addition;
-*           return multiplication;
+\+           return addition;
+\*           return multiplication;
 -           return soustraction;
-/           return division;
+\/           return division;
 
 [ \t{commentaire}]
 \n             nb_ligne++;
-.{printf("erreur lexicale a la ligne %d \n"nb_ligne);}
+
 
 
 
