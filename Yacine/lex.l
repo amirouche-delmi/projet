@@ -68,9 +68,10 @@ ELSE         return mc_else;
 \/           return division;
 
 [ \t{commentaire}]
-\n             nb_ligne++;
+\n            { nb_ligne++;}
+.printf("erreur lexicale a la ligne %d \n",nb_ligne);
 
-
+.
 
 
 
