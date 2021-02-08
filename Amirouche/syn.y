@@ -59,7 +59,12 @@ S: mc_import BIB dollar fin_ligne NOM_PROG
                             }
 ;
 BIB: bib_process|bib_loop|bib_array;
-NOM_PROG: mc_programme
+NOM_PROG: mc_programme idf DEBUT_PROG|mc_programme idf fin_ligne DEBUT_PROG
+                            {
+
+                            }
+;
+DEBUT_PROG: accolade_ouvrante accolade_fermante
                             {
 
                             }

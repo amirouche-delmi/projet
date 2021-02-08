@@ -3,13 +3,13 @@
     int nb_ligne = 1;
 %}
 
-idf         [A-Z]\w{0,9};
-taille_tab  [1-9]\d*;
-int         0|[1-3][0-2][0-7][0-6][0-7]|[1-9]\d{0,3}|\([+\-]([1-3][0-2][0-7][0-6][0-7]|[1-9]\d{0,3})\)|\(-32768\);
-real        \d\.\d|[1-9]\d*\.\d*[1-9]|\d\.\d*[1-9]|[1-9]\d*\.\d|\([+\-](\d\.\d|[1-9]\d*\.\d*[1-9]|\d\.\d*[1-9]|[1-9]\d*\.\d)\); 
-char        .;
+idf         [A-Z]\w{0,9}
+taille_tab  [1-9]\d*
+entier      0|[1-3][0-2][0-7][0-6][0-7]|[1-9]\d{0,3}|\([+\-]([1-3][0-2][0-7][0-6][0-7]|[1-9]\d{0,3})\)|\(-32768\)
+real        \d\.\d|[1-9]\d*\.\d*[1-9]|\d\.\d*[1-9]|[1-9]\d*\.\d|\([+\-](\d\.\d|[1-9]\d*\.\d*[1-9]|\d\.\d*[1-9]|[1-9]\d*\.\d)\)
+caractere   .;
 str         .*;
-commentaire "/*"[.\n]*"*/";
+commentaire "/*"[.\n]*"*/"
 
 %%
 
@@ -32,9 +32,9 @@ CONST          return mc_const;
 \[             return crochet_ouvrant;
 \]             return crochet_fermant;
 {taille_tab}   return taille_tab;
-{int}          return entier;
+{entier}       return entier;
 {real}         return real;
-{char}         return caractere;
+{caractere}    return caractere;
 {str}          return str;
 ":="           return affectation;
 READ           return mc_read;
@@ -65,4 +65,3 @@ ELSE           return mc_else;
 \/             return division;
 [ \t{commentaire}]
 \n             {nb_ligne++; return fin_ligne;}
-.              printf("erreur lexicale a la ligne %d \n", nb_ligne);
