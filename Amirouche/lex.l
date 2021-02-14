@@ -3,22 +3,23 @@
     int nb_ligne = 1;
 %}
 
-idf         [A-Z]\w{0,9}
-taille_tab  [1-9]\d*
-entier      0|[1-3][0-2][0-7][0-6][0-7]|[1-9]\d{0,3}|\([+\-]([1-3][0-2][0-7][0-6][0-7]|[1-9]\d{0,3})\)|\(-32768\)
-real        \d\.\d|[1-9]\d*\.\d*[1-9]|\d\.\d*[1-9]|[1-9]\d*\.\d|\([+\-](\d\.\d|[1-9]\d*\.\d*[1-9]|\d\.\d*[1-9]|[1-9]\d*\.\d)\)
-caractere   .;
-str         .*;
-commentaire "/*"[.\n]*"*/"
+idf         [A-Z][A-Za-z0-9]{0,9}
+taille_tab  [1-9][0-9]*
+entier      0|[1-3][0-2][0-7][0-6][0-7]|[1-9][0-9]{0,3}|\([+\-]([1-3][0-2][0-7][0-6][0-7]|[1-9][0-9]{0,3})\)|\(-32768\)
+real        [0-9]\.[0-9]|[1-9][0-9]*\.[0-9]*[1-9]|[0-9]\.[0-9]*[1-9]|[1-9][0-9]*\.[0-9]|\([+\-]([0-9]\.[0-9]|[1-9][0-9]*\.[0-9]*[1-9]|[0-9]\.[0-9]*[1-9]|[1-9][0-9]*\.[0-9])\)
+caractere   [A-Za-z0-9]
+str         \"[.]*\"
+commentaire "/*"[.]*"*/"
 
 %%
 
-##             return mc_import;
+##             return diese;
 PROCESS        return bib_process;
 LOOP           return bib_loop;
-ARRAY          return bib_array;             
-programme      return mc_programme;
-{idf}          return idf;
+ARRAY          return bib_array;
+\$             return dollar;             
+Programme      return mc_programme;
+
 \{             return accolade_ouvrante;
 \}             return accolade_fermante;
 VAR            return mc_var; 
@@ -31,22 +32,25 @@ CONST          return mc_const;
 "//"           return separateur_var;
 \[             return crochet_ouvrant;
 \]             return crochet_fermant;
+\=             return egale;
 {taille_tab}   return taille_tab;
 {entier}       return entier;
 {real}         return real;
 {caractere}    return caractere;
-{str}          return str;
+\"             return guillemet;
+\'             return apostrophe;
+
 ":="           return affectation;
 READ           return mc_read;
 \(             return parenthese_ouvrante;
 \)             return parenthese_fermante;
-\"             return guillemet;
-\$             return dollar;
+\;             return signe_de_formatage_integer;
 \%             return signe_de_formatage_real;
-\#             return signe_de_formatage_string;
+\?             return signe_de_formatage_string;
 \&             return signe_de_formatage_char;
 \|             return barre_verticale;
-\@             return arobase; 
+\@             return arobase;
+
 WRITE          return mc_write;
 while          return mc_while;
 INF            return mc_inf;
@@ -63,5 +67,8 @@ ELSE           return mc_else;
 \*             return multiplication;
 \-             return soustraction;
 \/             return division;
+{idf}          return idf;
+
 [ \t{commentaire}]
 \n             {nb_ligne++; return fin_ligne;}
+.              printf("erreur lexicale %s a la ligne %d \n", yytext, nb_ligne);
