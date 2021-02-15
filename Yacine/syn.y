@@ -3,7 +3,6 @@
 lettre
 chiffre
 IDF 
-
 commentaire
 mc_import
 bib_process
@@ -56,13 +55,13 @@ accolade_fermante
 % start S
 %%
 
-S:  mc_programme identificateur accolade_ouvrante accolade_fermante{  
+S:  Dec_bib P  {  
             printf("Declaration  syntaxiquement correcte");
              YYACCEPT;
 }
 ;
 
-Dec_bib : mc_import Nom_Bib dollar Dec_bib 
+Dec_bib : mc_import Nom_Bib dollar Dec_bib | 
 
 ;
 
