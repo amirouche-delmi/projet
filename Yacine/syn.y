@@ -1,8 +1,15 @@
+%{
+#include <stdio.h>
+#define YYSTYPE int
+int yyparse();
+int yylex();
+int yyerror(char *t);
+%}
+
+
 %token 
 
-lettre
-chiffre
-IDF 
+IDF
 commentaire
 mc_import
 bib_process
@@ -21,7 +28,6 @@ real
 caractere
 string
 taille_tab
-identificateur
 mc_write
 mc_while
 mc_inf
@@ -52,7 +58,7 @@ crochet_ouvrant
 crochet_fermant
 accolade_ouvrante
 accolade_fermante
-% start S
+%start S
 %%
 
 S:  Dec_bib P  {  
@@ -61,7 +67,7 @@ S:  Dec_bib P  {
 }
 ;
 
-Dec_bib : mc_import Nom_Bib dollar Dec_bib | 
+Dec_bib : mc_import Nom_Bib dollar  Dec_bib | 
 
 ;
 
@@ -69,13 +75,18 @@ Dec_bib : mc_import Nom_Bib dollar Dec_bib |
 Nom_Bib:bib_array|bib_loop|bib_process 
 ;
 
-P : mc_programme identificateur accolade_ouvrante accolade_fermante
+P : mc_programme  accolade_ouvrante accolade_fermante 
 ;
 
 %%
-main ()
-{
-yyparse();
+int yyerror(char *t) {
+    printf("\n test erreur : %s\n",t);
+    return 0;
 }
-yywrap()
-{}
+
+int main(void) {
+        printf("\n test 1" );
+    yyparse();
+            printf("\n test 2" );
+    return 0;
+}

@@ -1,17 +1,17 @@
 %{
-	#include "syn.tab.h"
+	#include "syn.tab.h"	
 	int nb_ligne=1;
 %}
-lettre      [A-Za-z];
-chiffre     [0-9];  
-IDF         [A-Z]({lettre}|{chiffre}){0,9};
-cst         {chiffre}+;
-int         ((^[1-3][0-2][0-7][0-6][0-7]$|^[1-9][0-9][0-9][0-9]$|^[1-9][0-9][0-9]$|^[1-9][0-9]$|^[0-9]$))|\(-[1-3][0-2][0-7][0-6][0-8]\)|\(-[1-9][0-9][0-9][0-9]\)|\(-[1-9][0-9][0-9]\)|\(-[1-9][0-9]\)|\(-[1-9]\);
-real      \(-{chiffre}\d*\.{chiffre}*[1-9]\)|\(-{chiffre}\.{chiffre}*[1-9]\)|{chiffre}\.{chiffre}*[1-9]|[1-9]\d*\.{chiffre}*[1-9];
-char        .;
-taille_tab   [1-9]{chiffre}*;
-string        .*;
-commentaire  "/*"{string}"*/";
+lettre      [A-Za-z]
+chiffre     [0-9]
+idf         [A-Z]{lettre}|{chiffre}*
+cst         {chiffre}+
+int         ((^[1-3][0-2][0-7][0-6][0-7]$|^[1-9][0-9][0-9][0-9]$|^[1-9][0-9][0-9]$|^[1-9][0-9]$|^[0-9]$))|\(-[1-3][0-2][0-7][0-6][0-8]\)|\(-[1-9][0-9][0-9][0-9]\)|\(-[1-9][0-9][0-9]\)|\(-[1-9][0-9]\)|\(-[1-9]\)
+real      \(-{chiffre}\d*\.{chiffre}*[1-9]\)|\(-{chiffre}\.{chiffre}*[1-9]\)|{chiffre}\.{chiffre}*[1-9]|[1-9]\d*\.{chiffre}*[1-9]
+char        [A-Za-z0-9]
+taille_tab   [1-9]{chiffre}*
+string      \"[.]*\"
+commentaire  "/*"{string}"*/"
 
 
 %%
@@ -30,14 +30,12 @@ REAL           return mc_real;
 CHAR           return mc_char;
 STRING         return mc_string;
 CONST          return mc_const;
-
 {int}          return entier;
 {real}         return real;
-{IDF}          return identificateur;
 {taille_tab}   return taille_tab;
-{char}         return caractere;
 {string}       return string;
-
+{char}         return caractere;
+{idf}          return IDF;
 
 
 WRITE        return mc_write;
@@ -73,8 +71,8 @@ ELSE         return mc_else;
 \}           return accolade_fermante;
 
 [ \t{commentaire}]
-\n           { nb_ligne++;}
-.printf("erreur lexicale a la ligne %d \n",nb_ligne);
+\n           { nb_ligne++;  }
+. {printf("erreur lexicale a la ligne %d \n",nb_ligne);}
 
 
 
