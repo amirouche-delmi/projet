@@ -49,7 +49,7 @@ CONDITION: mc_execut FIN LIST_INST IF ELSE mc_end_if ;
 
 IF: mc_if parenthese_o COND parenthese_f FIN ;
 
-ELSE: mc_else FIN mc_execut FIN LIST_INST |
+ELSE: mc_else FIN mc_execut FIN LIST_INST | ;
 
 
 

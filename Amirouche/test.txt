@@ -29,15 +29,17 @@ Programme Hello
 
     while(2.3 + 0 + IDF EG 34 + Tab[345])
     {
-        If := 23 + 23 $
+        Df := 23 + 23 $
 
         while(2.3 + 0 + IDF EG 34 + Tab[345])
         {
-            If := 23 + 23 $
+            Df := 23 + 23 $
 
             EXECUT
-                If := 23 + 23 $
-            IF( 2 INF 5 )
+                Df := 23 + 23 $
+            IF( 2 INF 5 ) ELSE 
+            EXECUT
+                Df := 23 + 23 $
             END_IF
 
         }
