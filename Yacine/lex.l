@@ -2,16 +2,18 @@
 	#include "syn.tab.h"	
 	int nb_ligne=1;
 %}
-lettre      [A-Za-z]
-chiffre     [0-9]
-idf         [A-Z]{lettre}|{chiffre}*
-cst         {chiffre}+
-int         ((^[1-3][0-2][0-7][0-6][0-7]$|^[1-9][0-9][0-9][0-9]$|^[1-9][0-9][0-9]$|^[1-9][0-9]$|^[0-9]$))|\(-[1-3][0-2][0-7][0-6][0-8]\)|\(-[1-9][0-9][0-9][0-9]\)|\(-[1-9][0-9][0-9]\)|\(-[1-9][0-9]\)|\(-[1-9]\)
-real      \(-{chiffre}\d*\.{chiffre}*[1-9]\)|\(-{chiffre}\.{chiffre}*[1-9]\)|{chiffre}\.{chiffre}*[1-9]|[1-9]\d*\.{chiffre}*[1-9]
-char        [A-Za-z0-9]
-taille_tab   [1-9]{chiffre}*
-string      \"[.]*\"
-commentaire  "/*"{string}"*/"
+lettre       [A-Za-z]
+chiffre      [0-9]
+idf          [A-Z]({lettre}|{chiffre})*
+cst          {chiffre}+
+int          0|[1-3][0-2][0-7][0-6][0-7]|[1-9]([0-9]{0,3})|\([+\-]([1-3][0-2][0-7][0-6][0-7]|[1-9]([0-9]{0,3}))\)|\(-32768\)
+real         [0-9]\.[0-9]|[1-9][0-9]*\.[0-9]*[1-9]|[0-9]\.[0-9]*[1-9]|[1-9][0-9]*\.[0-9]|\([+\-]([0-9]\.[0-9]|[1-9][0-9]*\.[0-9]*[1-9]|[0-9]\.[0-9]*[1-9]|[1-9][0-9]*\.[0-9])\)
+char         \'[A-Za-z0-9]\'
+taille_tab   \[[1-9]{chiffre}*\]
+string         \"[^"]*\"
+commentaire   "/*".*"*/" 
+
+
 
 
 %%
@@ -33,11 +35,13 @@ CONST          return mc_const;
 {int}          return entier;
 {real}         return real;
 {taille_tab}   return taille_tab;
-{string}       return string;
 {char}         return caractere;
-{idf}          return IDF;
 
 
+
+
+
+READ         return mc_read;
 WRITE        return mc_write;
 while        return mc_while;
 INF          return mc_inf;
@@ -50,6 +54,10 @@ EXECUT       return mc_execut;
 IF           return mc_if;
 END_IF       return mc_end_if;
 ELSE         return mc_else;
+{idf}        return IDF;
+{commentaire}  return commentaire;
+{string}       return string; 
+
 
 ::          return quatre_points;
 "//"        return separateur_var;
@@ -58,21 +66,27 @@ ELSE         return mc_else;
 \%          return signe_de_formatage_real;
 \#          return signe_de_formatage_string;
 \&          return signe_de_formatage_char;
-\"          return guillemet;
+\"          return guillemet ;
+
+
+
+
 \|          return barre_verticale;
-@           return arobase; 
+@           return arobase;
 \+          return addition;
 \*          return multiplication;
 \-          return soustraction;
 \/          return division;
+":="        return affectation;
 \[          return crochet_ouvrant;
 \]	        return crochet_fermant;
 \{           return accolade_ouvrante;
 \}           return accolade_fermante;
 
-[ \t{commentaire}]
-\n           { nb_ligne++;  }
-. {printf("erreur lexicale a la ligne %d \n",nb_ligne);}
+
+[ \t {commentaire}]
+\n    { nb_ligne++; return fin_ligne;}
+.  {printf("erreur lexicale a la ligne %d \n",nb_ligne);}
 
 
 

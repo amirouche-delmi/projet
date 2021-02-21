@@ -1,0 +1,65 @@
+## PROCESS $  
+## LOOP $ 
+Programme Ab{ 
+VAR 
+INTEGER :: Xe [3] // Fe $ 
+STRING :: Se // See[34] $
+REAL :: Am[50] $
+
+
+CONST 
+REAL :: XE :=4$      
+INTEGER :: XAAAAA := 20 // XB:=55 $
+REAL :: XBNN :=  0 $
+STRING:: Xn :="yaaaljpooipia" $ 
+
+
+
+/*mmmm*/
+
+while(2.3 + 0 + IDF EG 34 + Tab[345])
+    { 
+      
+
+        
+        
+        Df := 23 + 23 $ /*mmmm mmmm*/
+
+        
+
+        while(2.3 +  IDF EG 34 + Tab[345])
+        {  /*mmmm*/
+          READ("sh"|@Abbbb)
+
+    
+        
+            Df := 23 + 23 $ /*mmmm*/
+            EXECUT 
+              
+                Df := 23 + 23 $
+            IF( 2 INF 5 ) ELSE    EXECUT /*mmmm*/ 
+                Df := 23 + 23 $
+            END_IF $
+            WRITE ("mot" | Xvcc)
+
+        }
+
+    }
+     /*KKKK*/
+
+    EXECUT
+        If := 23 + 23  $ 
+    IF( 2 INF 5 ) 
+   
+    END_IF $ /*ceci est un commentaire */
+ 
+If := 23 + 23 $
+
+
+/* ceci est un commentaire */
+Cgg := Gk+63 $
+
+ WRITE ("mot" | Xvcc)
+
+
+}
