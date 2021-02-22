@@ -38,6 +38,7 @@ CONST          return mc_const;
 {real}         return real;
 {caractere}    return caractere;
 {str}          return string;
+{commentaire}  
 \"             return guillemet;
 \'             return apostrophe;
 
@@ -70,6 +71,6 @@ ELSE           return mc_else;
 \/             return division;
 {idf}          return idf;
 
-[ \t{commentaire}]
+[ \t]
 \n             {nb_ligne++; return fin_ligne;}
 .              printf("erreur lexicale %s a la ligne %d \n", yytext, nb_ligne);

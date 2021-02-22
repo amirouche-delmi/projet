@@ -4,7 +4,7 @@
 ## LOOP $ 
 ## ARRAY $
 
-Programme Hello 
+Programme Hello /*hello*/
 {
      VAR 
         INTEGER :: Xe [3] // Fe $ 
